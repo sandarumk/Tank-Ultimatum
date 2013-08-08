@@ -21,12 +21,13 @@ import java.util.logging.Logger;
  */
 public class welcomeScreen extends javax.swing.JFrame {
 
-    /** Creates new form welcomeScreen */
+    /**
+     * Creates new form welcomeScreen
+     */
     public welcomeScreen() {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -113,32 +114,24 @@ public class welcomeScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void joinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinButtonActionPerformed
-        //connection to the game and send the join signal to the server
-        Connection connect=new Connection();
-        try {
-            connect.joingame();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(welcomeScreen.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(welcomeScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//      Gui Instance 
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setVisible(true);
+//      Thread for server connection
+        ConnectionThread ct = new ConnectionThread(mainFrame);
+        ct.start();
+//      close the welcome screen
+        this.dispose();
+//      if updates to be sent in another thread
+     
     }//GEN-LAST:event_joinButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                new welcomeScreen().setVisible(true);
-            }
-        });
+    public void run() {
+        new welcomeScreen().setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel captionLabel;
